@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">i56</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="用户" view="colnames">
+<left>16</left>
+<top>260</top>
+<width>116</width>
+<height>169</height>
+<sql_create_table>CREATE TABLE `用户` (
+  `ID` int(8) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `nation` varchar(20) NOT NULL,
+  `post_ID` int(8) DEFAULT NULL,
+  `grade` int(8) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `post ID` (`post_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="浏览内容" view="colnames">
+<left>218</left>
+<top>10</top>
+<width>135</width>
+<height>209</height>
+<sql_create_table>CREATE TABLE `浏览内容` (
+  `nation` varchar(20) NOT NULL,
+  `Introduction` varchar(20) NOT NULL,
+  `History` varchar(20) NOT NULL,
+  `Clothes` varchar(20) NOT NULL,
+  `custom` varchar(20) NOT NULL,
+  `post_nation_ID` int(8) DEFAULT NULL,
+  `text_id` int(8) DEFAULT NULL,
+  PRIMARY KEY (`nation`),
+  UNIQUE KEY `post_nation_ID` (`post_nation_ID`),
+  UNIQUE KEY `text_id` (`text_id`),
+  CONSTRAINT `浏览内容_ibfk_1` FOREIGN KEY (`text_id`) REFERENCES `测试题目` (`question_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="一个帖子" view="colnames">
+<left>248</left>
+<top>476</top>
+<width>154</width>
+<height>189</height>
+<sql_create_table>CREATE TABLE `一个帖子` (
+  `post_ID` int(8) NOT NULL,
+  `post_nation_ID` int(8) NOT NULL,
+  `ID` int(8) NOT NULL,
+  `content` varchar(20000) NOT NULL,
+  `likes` int(8) NOT NULL,
+  PRIMARY KEY (`post_ID`),
+  CONSTRAINT `一个帖子_ibfk_1` FOREIGN KEY (`post_ID`) REFERENCES `用户` (`post_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="回复" view="colnames">
+<left>547</left>
+<top>503</top>
+<width>106</width>
+<height>149</height>
+<sql_create_table>CREATE TABLE `回复` (
+  `post_ID` int(8) NOT NULL,
+  `ID` int(8) NOT NULL,
+  `content` varbinary(20000) NOT NULL,
+  PRIMARY KEY (`post_ID`),
+  UNIQUE KEY `ID` (`ID`),
+  CONSTRAINT `回复_ibfk_1` FOREIGN KEY (`post_ID`) REFERENCES `一个帖子` (`post_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="民族帖子" view="colnames">
+<left>480</left>
+<top>12</top>
+<width>154</width>
+<height>209</height>
+<sql_create_table>CREATE TABLE `民族帖子` (
+  `post_nation_ID` int(8) NOT NULL,
+  `post_id_1` int(8) NOT NULL,
+  `post_id_2` int(8) NOT NULL,
+  `post_id_3` int(8) NOT NULL,
+  `post_id_4` int(8) NOT NULL,
+  `post_id_5` int(8) NOT NULL,
+  PRIMARY KEY (`post_nation_ID`),
+  KEY `post_id_1` (`post_id_1`),
+  CONSTRAINT `民族帖子ID` FOREIGN KEY (`post_nation_ID`) REFERENCES `浏览内容` (`post_nation_ID`),
+  CONSTRAINT `民族帖子_ibfk_1` FOREIGN KEY (`post_id_1`) REFERENCES `一个帖子` (`post_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="测试答案" view="colnames">
+<left>987</left>
+<top>234</top>
+<width>120</width>
+<height>209</height>
+<sql_create_table>CREATE TABLE `测试答案` (
+  `answer_id` int(8) NOT NULL,
+  `answer1` varchar(2000) DEFAULT NULL,
+  `answer2` varchar(2000) DEFAULT NULL,
+  `answer3` varchar(2000) DEFAULT NULL,
+  `answer4` varchar(2000) DEFAULT NULL,
+  `answer5` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`answer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="测试题目" view="colnames">
+<left>687</left>
+<top>234</top>
+<width>129</width>
+<height>209</height>
+<sql_create_table>CREATE TABLE `测试题目` (
+  `question_id` int(8) NOT NULL,
+  `question1` varchar(2000) NOT NULL,
+  `question2` varchar(2000) NOT NULL,
+  `question3` varchar(2000) DEFAULT NULL,
+  `question4` varchar(2000) DEFAULT NULL,
+  `question5` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`question_id`),
+  CONSTRAINT `测试题目_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `测试答案` (`answer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
